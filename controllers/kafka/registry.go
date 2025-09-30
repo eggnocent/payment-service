@@ -8,7 +8,7 @@ type IKafkaRegistry interface {
 	GetKafkaProducer() IKafka
 }
 
-func NewRegistry(brokers []string) IKafkaRegistry {
+func NewKafkaRegistry(brokers []string) IKafkaRegistry {
 	return &Registry{
 		brokers: brokers,
 	}

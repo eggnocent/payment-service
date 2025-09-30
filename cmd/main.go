@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"net/http"
 	"payment-service/clients"
+	midtransClient "payment-service/clients/midtrans"
 	"payment-service/common/gcs"
 	"payment-service/common/response"
 	"payment-service/config"
 	"payment-service/constants"
-	"payment-service/controllers"
+	controllers "payment-service/controllers/http"
+	kafkaClient "payment-service/controllers/kafka"
 	"payment-service/domain/models"
 	"payment-service/middlewares"
 	"payment-service/repositories"
@@ -49,18 +51,19 @@ var command = &cobra.Command{
 		time.Local = loc
 
 		err = db.AutoMigrate(
-			&models.Field{},
-			&models.FieldSchedule{},
-			&models.Time{},
+			&models.Payment{},
+			&models.PaymentHistory{},
 		)
 		if err != nil {
 			panic(err)
 		}
 
 		gcs := InitGCS()
+		kafka := kafkaClient.NewKafkaRegistry(config.Config.Kafka.Brokers)
+		midtrans := midtransClient.NewMidtransClient(config.Config.Midtrans.ServerKey, config.Config.Midtrans.IsProduction)
 		client := clients.NewClientRegistry()
 		repository := repositories.NewRepositoryRegistry(db)
-		service := services.NewServiceRegistry(repository, gcs)
+		service := services.NewServiceRegistry(repository, gcs, kafka, midtrans)
 		controller := controllers.NewControllerRegistry(service)
 
 		// ✅ Ganti gin.Default() → gin.New() agar HandlePanic() aktif
@@ -78,7 +81,7 @@ var command = &cobra.Command{
 		router.GET("/", func(c *gin.Context) {
 			c.JSON(http.StatusOK, response.Response{
 				Status:  constants.Success,
-				Message: "Welcome to Field Service",
+				Message: "Welcome to Payment Service",
 			})
 		})
 

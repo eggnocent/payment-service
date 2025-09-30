@@ -1,19 +1,20 @@
 package dto
 
 import (
-	"github.com/google/uuid"
 	"payment-service/constants"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type PaymentRequest struct {
 	PaymentLink    string          `json:"payment_link"`
-	OrderID        string          `json:"order_id"`
-	ExpiredAt      time.Time       `json:"expired_at"`
+	OrderID        string          `json:"orderId"`
+	ExpiredAt      time.Time       `json:"expiredAt"`
 	Amount         float64         `json:"amount"`
 	Description    *string         `json:"description"`
-	CustomerDetail *CustomerDetail `json:"customer_detail"`
-	ItemDetail     []ItemDetail    `json:"item_detail"`
+	CustomerDetail *CustomerDetail `json:"customerDetail"`
+	ItemDetail     []ItemDetail    `json:"itemDetails"`
 }
 
 type CustomerDetail struct {
@@ -53,12 +54,13 @@ type PaymentResponse struct {
 	Status        constants.PaymentStatusString `json:"status"`
 	PaymentLink   string                        `json:"payment_link"`
 	InvoiceLink   *string                       `json:"invoice_link"`
-	TransactionID *string                       `form:"transaction_id"`
-	PaidAt        *time.Time                    `form:"paid_at"`
-	VANumber      *string                       `form:"va_number"`
-	Bank          *string                       `form:"bank"`
-	Acquirer      *string                       `form:"acquirer"`
+	TransactionID *string                       `form:"transaction_id,omitempty"`
+	PaidAt        *time.Time                    `form:"paid_at,omitempty"`
+	VANumber      *string                       `form:"va_number,omitempty"`
+	Bank          *string                       `form:"bank,omitempty"`
+	Acquirer      *string                       `form:"acquirer,omitempty"`
 	Description   *string                       `form:"description"`
+	ExpiredAt     *time.Time                    `json:"expired_at"`
 	CreatedAt     *time.Time                    `json:"created_at"`
 	UpdatedAt     *time.Time                    `json:"updated_at"`
 }
@@ -75,8 +77,8 @@ type WebHook struct {
 	PaymentType       string                        `json:"payment_type"`
 	PaymentAmount     []PaymentAmount               `json:"payment_amount"`
 	OrderID           uuid.UUID                     `json:"order_id"`
-	MerchantID        uuid.UUID                     `json:"merchant_id"`
-	GrossAmount       float64                       `json:"gross_amount"`
+	MerchantID        string                        `json:"merchant_id"`
+	GrossAmount       string                        `json:"gross_amount"`
 	FraudStatus       string                        `json:"fraud_status"`
 	Currency          string                        `json:"currency"`
 	Acquirer          *string                       `json:"acquirer"`

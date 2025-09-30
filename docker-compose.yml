@@ -1,9 +1,18 @@
 name: booking-order-app # change this to your app name
 services:
-  user-service: # change this to your service name
-    container_name: user-service # change this to your service name
-    image: sikoding20/user-service # change this to your image name
+  payment-service: # change this to your service name
+    container_name: payment-service # change this to your service name
+#    image: eggnocent/field-service:3 # change this to your image name
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8001:8001" # change this to your port
+      - "8003:8003" # change this to your port
     env_file:
       - .env
+    networks:
+      - local-network
+
+networks:
+  local-network:
+    external: true

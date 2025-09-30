@@ -1,22 +1,22 @@
 package dto
 
 type InvoiceRequest struct {
-	InvoiceNumber string      `json:"invoice_number"`
+	InvoiceNumber string      `json:"invoiceNumber"`
 	Data          InvoiceData `json:"data"`
 }
 
 type InvoiceData struct {
-	PaymentDetail InvoicePaymentDetail `json:"payment_detail"`
+	PaymentDetail InvoicePaymentDetail `json:"paymentDetail"`
 	Items         []InvoiceItem        `json:"items"`
 	Total         string               `json:"total"`
 }
 
 type InvoicePaymentDetail struct {
-	BankName      string `json:"bank_name"`
-	PaymentMethod string `json:"payment_method"`
-	VANumber      string `json:"va_number"`
+	BankName      string `json:"bankName"`
+	PaymentMethod string `json:"paymentMethod"`
+	VANumber      string `json:"vaNumber"`
 	Date          string `json:"date"`
-	IsPaid        string `json:"is_paid"`
+	IsPaid        bool   `json:"isPaid"`
 }
 
 type InvoiceItem struct {
