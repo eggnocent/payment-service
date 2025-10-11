@@ -48,8 +48,8 @@ ENV TZ=Asia/Jakarta
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Copy wkhtmltopdf binaries from builder image
-COPY --from=builder /usr/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
-COPY --from=builder /usr/bin/wkhtmltoimage /usr/bin/wkhtmltoimage
+COPY --from=builder /bin/wkhtmltopdf /bin/wkhtmltopdf
+COPY --from=builder /bin/wkhtmltoimage /bin/wkhtmltoimage
 
 # Run app
 EXPOSE 8003
