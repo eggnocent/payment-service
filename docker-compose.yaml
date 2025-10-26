@@ -2,7 +2,7 @@ name: booking-order-app # change this to your app name
 services:
   payment-service: # change this to your service name
     container_name: payment-service # change this to your service name
-    image: eggnocent/payment-service:3 # change this to your image name
+    image: eggnocent/payment-service:5 # change this to your image name
     
     ports:
       - "8003:8003" # change this to your port
