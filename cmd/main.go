@@ -81,7 +81,7 @@ var command = &cobra.Command{
 		router.GET("/", func(c *gin.Context) {
 			c.JSON(http.StatusOK, response.Response{
 				Status:  constants.Success,
-				Message: "Welcome to Payment Service",
+				Message: "Welcome to Payment Services",
 			})
 		})
 
